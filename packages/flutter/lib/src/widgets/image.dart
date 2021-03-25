@@ -82,10 +82,10 @@ Future<void> precacheImage(
   final Completer<void> completer = Completer<void>();
   final ImageStream stream = provider.resolve(config);
   void listener(ImageInfo image, bool sync) {
-    completer.complete();
+    if (!completer.isCompleted) completer.complete();
   }
   void errorListener(dynamic exception, StackTrace stackTrace) {
-    completer.complete();
+    if (!completer.isCompleted) completer.complete();
     if (onError != null) {
       onError(exception, stackTrace);
     } else {
